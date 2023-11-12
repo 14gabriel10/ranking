@@ -6,9 +6,15 @@ import sqlite3
 
 class Sistema_Palpites():
   def __init__(self):
+    # Variáveis Constantes.
+    self.WIN_WIDTH  = 1366
+    self.WIN_HEIGHT = 780
+    self.COR_BG     = 'darkgrey'
+    self.COR_BG_IN  = 'white'
+    self.COR_FG     = 'black'
+
     # Janela Principal e respectivos Frames.
-    self.__win  = None
-    self.__tree = None
+    self.__win       = self.__tree         = self.__scrollbar = None
     self.__frm_nome  = self.__frm_palpites = None
     self.__frm_lista = self.__style        = None
 
@@ -41,33 +47,45 @@ class Sistema_Palpites():
     self.__init_db()
 
   def __init_tk_frames(self)->None:
-    self.__win = tkinter.Tk()
-    self.__win.title("Sistema de Palpites")
+    self.__win = Tk(className='Sistema de Palpites')
+    self.__win.geometry('%dx%d' % (self.WIN_WIDTH, self.WIN_HEIGHT))
 
     # Inicialização das variáveis.
     self.__frm_nome     = tkinter.Frame (self.__win)
     self.__frm_palpites = tkinter.Frame (self.__win)
     self.__frm_lista    = tkinter.Frame (self.__win)
 
+    # Configurações de frame e Janela Principal.
+    self.__win.configure          (bg=self.COR_BG)
+    self.__frm_nome.configure     (bg=self.COR_BG, padx=self.WIN_WIDTH/2)
+    self.__frm_palpites.configure (bg=self.COR_BG, padx=self.WIN_WIDTH/3)
+    self.__frm_lista.configure    (bg=self.COR_BG, padx=self.WIN_WIDTH/2.7)
+
     self.__frm_nome.pack     (padx=53, pady=10, fill=tkinter.BOTH)
     self.__frm_palpites.pack (padx=53, fill=tkinter.BOTH)
     self.__frm_lista.pack    (padx=10, pady=10, fill=tkinter.BOTH)
 
   def __init_widgets_frm_nome(self)->None:
-    # Inicialização das variáveis de Label.
+    # Inicialização Labels.
     self.__nome_lb   = tkinter.Label (self.__frm_nome, text='Nome:')
     self.__rodada_lb = tkinter.Label (self.__frm_nome, text='Rodada:')
 
-    # Inicialização das variáveis de Input (Entry).
+    # Inicialização Entries.
     self.__nome_in   = tkinter.Entry (self.__frm_nome)
     self.__rodada_in = tkinter.Entry (self.__frm_nome)
 
+    # Configurações Widgets.
+    self.__nome_lb.configure   (bg=self.COR_BG,    fg=self.COR_FG)
+    self.__nome_in.configure   (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__rodada_lb.configure (bg=self.COR_BG,    fg=self.COR_FG)
+    self.__rodada_in.configure (bg=self.COR_BG_IN, fg=self.COR_FG)
+
   def __init_widgets_frm_palpites(self)->None:
     # Inicialização Labels.
-    self.__partida1_lb   = tkinter.Label (self.__frm_palpites, text='Palpite Jogo 1')
-    self.__partida2_lb   = tkinter.Label (self.__frm_palpites, text='Palpite Jogo 2')
-    self.__partida3_lb   = tkinter.Label (self.__frm_palpites, text='Palpite Jogo 3')
-    self.__partida4_lb   = tkinter.Label (self.__frm_palpites, text='Palpite Jogo 4')
+    self.__partida1_lb   = tkinter.Label (self.__frm_palpites, text='Partida 1')
+    self.__partida2_lb   = tkinter.Label (self.__frm_palpites, text='Partida 2')
+    self.__partida3_lb   = tkinter.Label (self.__frm_palpites, text='Partida 3')
+    self.__partida4_lb   = tkinter.Label (self.__frm_palpites, text='Partida 4')
     self.__mandante1_lb  = tkinter.Label (self.__frm_palpites, text="Cruzeiro")
     self.__mandante2_lb  = tkinter.Label (self.__frm_palpites, text="Palmeiras")
     self.__mandante3_lb  = tkinter.Label (self.__frm_palpites, text="Fluminense")
@@ -89,35 +107,63 @@ class Sistema_Palpites():
 
     # Inicialização Buttons.
     self.__palpitar_bt = tkinter.Button(self.__frm_palpites, text="Salvar Palpites",
-                                        command=self.__palpitar, bg='darkgrey')
+                                        command=self.__palpitar)
     self.__listar_bt = tkinter.Button(self.__frm_palpites, text="Ver Palpites",
-                                      command=self.__visualizar_palpites, bg='darkgrey')
+                                      command=self.__visualizar_palpites)
     self.__excluir_bt = tkinter.Button(self.__frm_palpites, text="Excluir Palpites",
-                                       command=self.__excluir_palpites, bg='darkgrey')
+                                       command=self.__excluir_palpites)
+    # Configurações Widgets.
+    self.__partida1_lb.configure   (bg=self.COR_BG, fg=self.COR_FG)
+    self.__partida2_lb.configure   (bg=self.COR_BG, fg=self.COR_FG)
+    self.__partida3_lb.configure   (bg=self.COR_BG, fg=self.COR_FG)
+    self.__partida4_lb.configure   (bg=self.COR_BG, fg=self.COR_FG)
+    self.__mandante1_lb.configure  (bg=self.COR_BG, fg=self.COR_FG)
+    self.__mandante2_lb.configure  (bg=self.COR_BG, fg=self.COR_FG)
+    self.__mandante3_lb.configure  (bg=self.COR_BG, fg=self.COR_FG)
+    self.__mandante4_lb.configure  (bg=self.COR_BG, fg=self.COR_FG)
+    self.__visitante1_lb.configure (bg=self.COR_BG, fg=self.COR_FG)
+    self.__visitante2_lb.configure (bg=self.COR_BG, fg=self.COR_FG)
+    self.__visitante3_lb.configure (bg=self.COR_BG, fg=self.COR_FG)
+    self.__visitante4_lb.configure (bg=self.COR_BG, fg=self.COR_FG)
+
+    self.__mandante1_in.configure  (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__mandante2_in.configure  (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__mandante3_in.configure  (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__mandante4_in.configure  (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__visitante1_in.configure (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__visitante2_in.configure (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__visitante3_in.configure (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__visitante4_in.configure (bg=self.COR_BG_IN, fg=self.COR_FG)
+
+    self.__palpitar_bt.configure (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__listar_bt.configure   (bg=self.COR_BG_IN, fg=self.COR_FG)
+    self.__excluir_bt.configure  (bg='red',          fg='white')
 
   def __init_tree(self)->None:
-    self.__tree = \
-      ttk.Treeview(self.__frm_lista, columns=('ID', 'Nome', 'Rodada', 'Partida 1',
-                                              'Partida 2', 'Partida 3', 'Partida 4'))
+    columns = ('palpite_id', 'nome', 'rodada', 'partida1', 'partida2',
+               'partida3', 'partida4')
+    self.__tree = ttk.Treeview(self.__frm_lista, columns=columns, show='headings')
+    self.__scrollbar = ttk.Scrollbar(self.__frm_lista, orient=tkinter.VERTICAL,
+                                     command=self.__tree.yview)
     self.__style = ttk.Style()
-    self.__style.configure("Treeview", rowheight=30) 
+    self.__style.configure("Treeview", rowheight=50) 
+    self.__tree.configure(yscroll=self.__scrollbar.set)
 
-    self.__tree.heading ("#0", text='ID',     anchor=tkinter.CENTER)
-    self.__tree.heading ("#1", text='Nome',   anchor=tkinter.CENTER)
-    self.__tree.heading ("#2", text='Rodada', anchor=tkinter.CENTER)
-    self.__tree.heading ("#3", text='Jogo 1', anchor=tkinter.CENTER)
-    self.__tree.heading ("#4", text='Jogo 2', anchor=tkinter.CENTER)
-    self.__tree.heading ("#5", text='Jogo 3', anchor=tkinter.CENTER)
-    self.__tree.heading ("#6", text='Jogo 4', anchor=tkinter.CENTER)
+    self.__tree.heading ("palpite_id", text='ID',        anchor=tkinter.CENTER)
+    self.__tree.heading ("nome",       text='Nome',      anchor=tkinter.CENTER)
+    self.__tree.heading ("rodada",     text='Rodada',    anchor=tkinter.CENTER)
+    self.__tree.heading ("partida1",   text='Partida 1', anchor=tkinter.CENTER)
+    self.__tree.heading ("partida2",   text='Partida 2', anchor=tkinter.CENTER)
+    self.__tree.heading ("partida3",   text='Partida 3', anchor=tkinter.CENTER)
+    self.__tree.heading ("partida4",   text='Partida 4', anchor=tkinter.CENTER)
 
-    self.__tree.column ("#0", width=50,  anchor=tkinter.CENTER)
-    self.__tree.column ("#1", width=180, anchor=tkinter.CENTER)
-    self.__tree.column ("#2", width=100, anchor=tkinter.CENTER)
-    self.__tree.column ("#3", width=180, anchor=tkinter.CENTER)
-    self.__tree.column ("#4", width=150, anchor=tkinter.CENTER)
-    self.__tree.column ("#5", width=150, anchor=tkinter.CENTER)
-    self.__tree.column ("#6", width=150, anchor=tkinter.CENTER)
-
+    self.__tree.column ("palpite_id", width=100, anchor=tkinter.CENTER)
+    self.__tree.column ("nome",       width=180, anchor=tkinter.CENTER)
+    self.__tree.column ("rodada",     width=100, anchor=tkinter.CENTER)
+    self.__tree.column ("partida1",   width=130, anchor=tkinter.CENTER)
+    self.__tree.column ("partida2",   width=130, anchor=tkinter.CENTER)
+    self.__tree.column ("partida3",   width=130, anchor=tkinter.CENTER)
+    self.__tree.column ("partida4",   width=130, anchor=tkinter.CENTER)
 
   def __init_widgets_janela_principal(self)->None:
     self.__nome_lb.grid       (row=0, column=0, padx=5, pady=10)
@@ -144,10 +190,11 @@ class Sistema_Palpites():
     self.__mandante4_in.grid  (row=3, column=8, padx=10)
     self.__visitante4_lb.grid (row=4, column=7)
     self.__visitante4_in.grid (row=4, column=8, padx=10)
-    self.__palpitar_bt.grid   (row=5, column=4, pady=25, columnspan=3)
-    self.__listar_bt.grid     (row=6, column=3, pady=25, columnspan=3)
-    self.__excluir_bt.grid    (row=6, column=5, pady=25, columnspan=3)
-    self.__tree.pack()
+    self.__palpitar_bt.grid   (row=5, column=4, pady=30, columnspan=3)
+    self.__listar_bt.grid     (row=6, column=3, pady=10, columnspan=3)
+    self.__excluir_bt.grid    (row=6, column=5, pady=10, columnspan=3)
+    self.__tree.grid          (row=0, column=0, sticky='nsew')
+    self.__scrollbar.grid     (row=0, column=1, sticky='ns')
 
   def __init_db(self)->None:
     self.__con = sqlite3.connect('palpites.db')
@@ -169,10 +216,9 @@ class Sistema_Palpites():
 
   def __visualizar_palpites(self)->None:
     self.__cur.execute('SELECT * FROM palpite') 
-    palpites = self.__cur.fetchall()
-
     for linha in self.__tree.get_children(): self.__tree.delete(linha)
-    for palpite in palpites: self.__tree.insert('', 'end', values=palpite)
+    for info in self.__cur.fetchall():
+      self.__tree.insert('', tkinter.END, values=info)
 
   def __palpitar(self)->None:
     nome   = self.__nome_in.get()
@@ -194,25 +240,26 @@ class Sistema_Palpites():
       ''', (nome, rodada, partida1, partida2, partida3, partida4))
       self.__con.commit()
       self.__visualizar_palpites()
-      messagebox.showinfo('Info', 'Palpite feito com sucesso!')
+      messagebox.showinfo('Info', 'Palpite realizado com sucesso!')
     else:
       messagebox.showwarning('Aviso', 'Preencha todos os dados para prosseguir.')
 
   def __excluir_palpites(self)->None:
     palpite_selecionado = self.__tree.selection()
     if palpite_selecionado:
-      if messagebox.askyesno('Confirmação', 'Confirmar exclsão do palpite?'):
-        for palpite in palpite_selecionado:
+      if messagebox.askyesno('Confirmação', 'Confirmar exclusão do palpite?'):
+        for info in palpite_selecionado:
           self.__cur.execute('''
             DELETE FROM palpite WHERE palpite_id=?
-          ''', (self.__tree.item(palpite, 'values')[0],))
+          ''', (self.__tree.item(info, 'values')[0],))
         self.__con.commit()
+        messagebox.showinfo('Informação', 'Palpite excluído com sucesso.')
         self.__visualizar_palpites()
     else: messagebox.showwarning('Aviso', 'Selecione palpite a excluir.')
 
   def __limpar_campos(self)->None:
     self.__nome_in.delete       (0, 'end')
-    slef.__rodada_in.delete     (0, 'end')
+    self.__rodada_in.delete     (0, 'end')
     self.__mandante1_in.delete  (0, 'end')
     self.__mandante2_in.delete  (0, 'end')
     self.__mandante3_in.delete  (0, 'end')
@@ -223,7 +270,6 @@ class Sistema_Palpites():
     self.__visitante4_in.delete (0, 'end')
 
   def runtime(self)->None:
-    self.__win.geometry("1366x780")
     self.__criar_tabela()
     self.__win.mainloop()    
     self.__con.close()
