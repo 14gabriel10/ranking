@@ -9,9 +9,19 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sqlite3
 
 
 class Ui_tela_adicionar(object):
+    def adicionar_jogador(self):
+        con = sqlite3.connect("ranking.db")
+        cur = con.cursor()
+        cur.execute("""
+          INSERT INTO tabela (nome, pontos) VALUES(?,?)
+        """, (self.input_nome.text(), int(self.input_pontos.text()))) 
+        con.commit()
+        con.close()
+
     def setupUi(self, tela_adicionar):
         tela_adicionar.setObjectName("tela_adicionar")
         tela_adicionar.resize(721, 521)
@@ -26,7 +36,7 @@ class Ui_tela_adicionar(object):
         self.logo_inicial = QtWidgets.QLabel(self.centralwidget)
         self.logo_inicial.setGeometry(QtCore.QRect(-14, 0, 741, 521))
         self.logo_inicial.setText("")
-        self.logo_inicial.setPixmap(QtGui.QPixmap("imagens/screen.jpg"))
+        self.logo_inicial.setPixmap(QtGui.QPixmap("../imagens/screen.jpg"))
         self.logo_inicial.setScaledContents(True)
         self.logo_inicial.setObjectName("logo_inicial")
         self.frame = QtWidgets.QFrame(self.centralwidget)
@@ -52,7 +62,7 @@ class Ui_tela_adicionar(object):
         self.logo = QtWidgets.QLabel(self.frame)
         self.logo.setGeometry(QtCore.QRect(50, 0, 271, 221))
         self.logo.setText("")
-        self.logo.setPixmap(QtGui.QPixmap("imagens/uno1.png"))
+        self.logo.setPixmap(QtGui.QPixmap("../imagens/uno1.png"))
         self.logo.setObjectName("logo")
         self.btn_salvar = QtWidgets.QPushButton(self.frame)
         self.btn_salvar.setGeometry(QtCore.QRect(120, 400, 111, 31))
@@ -85,25 +95,25 @@ class Ui_tela_adicionar(object):
         self.txt_add.setFont(font)
         self.txt_add.setStyleSheet("color: rgb(255, 255, 255);")
         self.txt_add.setObjectName("txt_add")
-        self.inpunt_nome = QtWidgets.QLineEdit(self.frame)
-        self.inpunt_nome.setGeometry(QtCore.QRect(120, 279, 111, 21))
+        self.input_nome = QtWidgets.QLineEdit(self.frame)
+        self.input_nome.setGeometry(QtCore.QRect(120, 279, 111, 21))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.inpunt_nome.setFont(font)
-        self.inpunt_nome.setStyleSheet("QLineEdit{\n"
+        self.input_nome.setFont(font)
+        self.input_nome.setStyleSheet("QLineEdit{\n"
 "background-color: rgb(255, 255, 255);\n"
 "border:1px solid red;\n"
 "border-radius: 5px\n"
 "}")
-        self.inpunt_nome.setMaxLength(15)
-        self.inpunt_nome.setObjectName("inpunt_nome")
+        self.input_nome.setMaxLength(15)
+        self.input_nome.setObjectName("input_nome")
         self.txt_pontos = QtWidgets.QLabel(self.frame)
         self.txt_pontos.setGeometry(QtCore.QRect(30, 330, 81, 21))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.txt_pontos.setFont(font)
         self.txt_pontos.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 0,5);")
+"background-color: rgba(0, 0, 0,5);")
         self.txt_pontos.setObjectName("txt_pontos")
         self.input_pontos = QtWidgets.QLineEdit(self.frame)
         self.input_pontos.setGeometry(QtCore.QRect(120, 330, 111, 21))
@@ -125,7 +135,7 @@ class Ui_tela_adicionar(object):
         font.setPointSize(11)
         self.txt_nome.setFont(font)
         self.txt_nome.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 0,5);")
+"background-color: rgba(0, 0, 0,5);")
         self.txt_nome.setObjectName("txt_nome")
         tela_adicionar.setCentralWidget(self.centralwidget)
 
@@ -137,6 +147,7 @@ class Ui_tela_adicionar(object):
         tela_adicionar.setWindowTitle(_translate("tela_adicionar", "uno"))
         self.btn_fechar.setText(_translate("tela_adicionar", "🔙"))
         self.btn_salvar.setText(_translate("tela_adicionar", "Salvar"))
+        self.btn_salvar.clicked.connect(self.adicionar_jogador)
         self.txt_add.setText(_translate("tela_adicionar", "Adicione um novo jogador !"))
         self.txt_pontos.setText(_translate("tela_adicionar", "Pontuação:"))
         self.txt_nome.setText(_translate("tela_adicionar", "Nome:"))
