@@ -1,4 +1,4 @@
-# Sistema de Palpites
-Projeto simples de um sistema de palpites esportivos utilizando a linguagem 
-de programação de Python3 seus componentes de Interface Grãfica de Usuário (GUI),
-a saber, Tkinter/Ttk.
+# Repositório de Projetos Extras
+Repositório para teste e projetos de estudo para além dos conteúdos
+aprendidos em sala de aula. Turma do Técnico em Desenvolvimento de
+Sistemas, SENAC Minas 2023.

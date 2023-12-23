@@ -9,9 +9,19 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sqlite3
 
 
 class Ui_tela_excluir(object):
+    def excluir_jogador(self):
+        con = sqlite3.connect("ranking.db")
+        cur = con.cursor()
+        cur.execute("""
+          DELETE FROM tabela WHERE id=?
+        """, (self.input_id.text(),))
+        con.commit()
+        con.close()
+
     def setupUi(self, tela_adicionar):
         tela_adicionar.setObjectName("tela_adicionar")
         tela_adicionar.resize(721, 571)
@@ -26,7 +36,7 @@ class Ui_tela_excluir(object):
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(0, 0, 721, 571))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("imagens/screen.jpg"))
+        self.label.setPixmap(QtGui.QPixmap("../imagens/screen.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.frame = QtWidgets.QFrame(self.centralwidget)
@@ -58,6 +68,7 @@ class Ui_tela_excluir(object):
         self.btn_voltar.setObjectName("btn_voltar")
         self.btn_excluir = QtWidgets.QPushButton(self.frame)
         self.btn_excluir.setGeometry(QtCore.QRect(120, 380, 101, 31))
+        self.btn_excluir.clicked.connect(self.excluir_jogador)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -87,30 +98,30 @@ class Ui_tela_excluir(object):
         self.txt_exclusao.setFont(font)
         self.txt_exclusao.setStyleSheet("color: rgb(255, 255, 255);")
         self.txt_exclusao.setObjectName("txt_exclusao")
-        self.inpunt_id = QtWidgets.QLineEdit(self.frame)
-        self.inpunt_id.setGeometry(QtCore.QRect(120, 320, 101, 31))
+        self.input_id = QtWidgets.QLineEdit(self.frame)
+        self.input_id.setGeometry(QtCore.QRect(120, 320, 101, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.inpunt_id.setFont(font)
-        self.inpunt_id.setStyleSheet("QLineEdit{\n"
+        self.input_id.setFont(font)
+        self.input_id.setStyleSheet("QLineEdit{\n"
 "background-color: rgb(255, 255, 255);\n"
 "border:1px solid red;\n"
 "border-radius: 5px\n"
 "}")
-        self.inpunt_id.setMaxLength(15)
-        self.inpunt_id.setObjectName("inpunt_id")
+        self.input_id.setMaxLength(15)
+        self.input_id.setObjectName("input_id")
         self.txt_id = QtWidgets.QLabel(self.frame)
         self.txt_id.setGeometry(QtCore.QRect(160, 300, 16, 17))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.txt_id.setFont(font)
         self.txt_id.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 0,5);")
+"background-color: rgba(0, 0, 0,5);")
         self.txt_id.setObjectName("txt_id")
         self.label_2 = QtWidgets.QLabel(self.frame)
         self.label_2.setGeometry(QtCore.QRect(50, 20, 231, 201))
         self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("imagens/uno1.png"))
+        self.label_2.setPixmap(QtGui.QPixmap("../imagens/uno1.png"))
         self.label_2.setObjectName("label_2")
         tela_adicionar.setCentralWidget(self.centralwidget)
 

@@ -9,9 +9,19 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sqlite3
 
 
 class Ui_tela_atualizar(object):
+    def atualizar_ranking(self):
+        con = sqlite3.connect("ranking.db")
+        cur = con.cursor()
+        cur.execute("""
+          UPDATE tabela SET pontos=? WHERE id=?
+        """, (self.input_nova_pontuacao.text(), self.input_id.text()))
+        con.commit()
+        con.close()
+
     def setupUi(self, tela_adicionar):
         tela_adicionar.setObjectName("tela_adicionar")
         tela_adicionar.resize(721, 571)
@@ -26,7 +36,7 @@ class Ui_tela_atualizar(object):
         self.logo_inicial = QtWidgets.QLabel(self.centralwidget)
         self.logo_inicial.setGeometry(QtCore.QRect(-4, 6, 731, 561))
         self.logo_inicial.setText("")
-        self.logo_inicial.setPixmap(QtGui.QPixmap("imagens/screen.jpg"))
+        self.logo_inicial.setPixmap(QtGui.QPixmap("../imagens/screen.jpg"))
         self.logo_inicial.setScaledContents(True)
         self.logo_inicial.setObjectName("logo_inicial")
         self.frame = QtWidgets.QFrame(self.centralwidget)
@@ -52,6 +62,7 @@ class Ui_tela_atualizar(object):
         self.btn_back.setObjectName("btn_back")
         self.btn_salvar = QtWidgets.QPushButton(self.frame)
         self.btn_salvar.setGeometry(QtCore.QRect(110, 420, 121, 31))
+        self.btn_salvar.clicked.connect(self.atualizar_ranking)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -82,28 +93,28 @@ class Ui_tela_atualizar(object):
         self.logo = QtWidgets.QLabel(self.frame)
         self.logo.setGeometry(QtCore.QRect(50, 10, 271, 191))
         self.logo.setText("")
-        self.logo.setPixmap(QtGui.QPixmap("imagens/uno1.png"))
+        self.logo.setPixmap(QtGui.QPixmap("../imagens/uno1.png"))
         self.logo.setObjectName("logo")
-        self.inpunt_id = QtWidgets.QLineEdit(self.frame)
-        self.inpunt_id.setGeometry(QtCore.QRect(110, 280, 121, 21))
+        self.input_id = QtWidgets.QLineEdit(self.frame)
+        self.input_id.setGeometry(QtCore.QRect(110, 280, 121, 21))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.inpunt_id.setFont(font)
-        self.inpunt_id.setStyleSheet("QLineEdit{\n"
+        self.input_id.setFont(font)
+        self.input_id.setStyleSheet("QLineEdit{\n"
 "background-color: rgb(255, 255, 255);\n"
 "border:1px solid red;\n"
 "border-radius: 5px\n"
 "}")
-        self.inpunt_id.setMaxLength(15)
-        self.inpunt_id.setAlignment(QtCore.Qt.AlignCenter)
-        self.inpunt_id.setObjectName("inpunt_id")
+        self.input_id.setMaxLength(15)
+        self.input_id.setAlignment(QtCore.Qt.AlignCenter)
+        self.input_id.setObjectName("input_id")
         self.txt_id = QtWidgets.QLabel(self.frame)
         self.txt_id.setGeometry(QtCore.QRect(160, 260, 21, 17))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.txt_id.setFont(font)
         self.txt_id.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 0,5);")
+"background-color: rgba(0, 0, 0,5);")
         self.txt_id.setObjectName("txt_id")
         self.input_nova_pontuacao = QtWidgets.QLineEdit(self.frame)
         self.input_nova_pontuacao.setGeometry(QtCore.QRect(110, 350, 121, 21))
@@ -125,7 +136,7 @@ class Ui_tela_atualizar(object):
         font.setPointSize(11)
         self.txt_novo_pontos.setFont(font)
         self.txt_novo_pontos.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 0,5);")
+"background-color: rgba(0, 0, 0,5);")
         self.txt_novo_pontos.setObjectName("txt_novo_pontos")
         tela_adicionar.setCentralWidget(self.centralwidget)
 

@@ -55,7 +55,7 @@ class Ui_tela_inicial_2(object):
         self.logo.setGeometry(QtCore.QRect(0, 0, 731, 571))
         self.logo.setAutoFillBackground(False)
         self.logo.setText("")
-        self.logo.setPixmap(QtGui.QPixmap("imagens/logo1.jpg"))
+        self.logo.setPixmap(QtGui.QPixmap("../imagens/logo1.jpg"))
         self.logo.setScaledContents(True)
         self.logo.setObjectName("logo")
         self.logo.raise_()

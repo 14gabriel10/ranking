@@ -9,6 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
+import sqlite3
 
 
 class Ui_MainWindow(object):
@@ -108,7 +110,7 @@ class Ui_MainWindow(object):
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(0, 0, 721, 271))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("imagens/uno.jpg"))
+        self.label.setPixmap(QtGui.QPixmap("../imagens/uno.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.label.raise_()
@@ -121,12 +123,34 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def atualizar_tabela(self):
+        con = sqlite3.connect("ranking.db") 
+        cur = con.cursor()
+        cur.execute("""
+          SELECT * FROM tabela ORDER BY pontos DESC
+        """)
+        tabela_nova = cur.fetchall() # retorna tupla 
+        con.close
+        for jogador in tabela_nova:
+          novos_jogadores = QtWidgets.QTreeWidgetItem(self.ranking)
+          novos_jogadores.setText(0, str(jogador[0]))
+          novos_jogadores.setTextAlignment(0, Qt.AlignCenter)
+          novos_jogadores.setText(1, str(jogador[1]))
+          novos_jogadores.setTextAlignment(1, Qt.AlignCenter)
+          novos_jogadores.setText(2, str(jogador[2]))
+          novos_jogadores.setTextAlignment(2, Qt.AlignCenter)
+          novos_jogadores.addChild(novos_jogadores)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "UNO"))
         self.ranking.headerItem().setText(0, _translate("MainWindow", "ID"))
         self.ranking.headerItem().setText(1, _translate("MainWindow", "NOME"))
         self.ranking.headerItem().setText(2, _translate("MainWindow", "PONTOS"))
+        self.ranking.setColumnWidth(0, 80)
+        self.ranking.setColumnWidth(1, 450)
+        self.ranking.setColumnWidth(2, 80)
+        self.atualizar_tabela()
         self.btn_atualizar.setText(_translate("MainWindow", "Atualizar Pontuação"))
         self.btn_adicionar.setText(_translate("MainWindow", "Adicionar Jogador"))
         self.btn_excluir.setText(_translate("MainWindow", "Excluir Jogador"))
