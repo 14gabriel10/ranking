@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>721</width>
+    <height>576</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>UNO</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 51, 0);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTreeWidget" name="ranking">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>280</y>
+      <width>701</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:5px;
+border:1px solid black</string>
+    </property>
+    <column>
+     <property name="text">
+      <string>ID</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>NOME</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>PONTOS</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+   </widget>
+   <widget class="QPushButton" name="btn_atualizar">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>230</y>
+      <width>161</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background-color: rgb(0, 150, 0);
+	
+	color: rgb(255, 255, 255);
+	border-radius:5px;
+	border:1px solid white
+}
+QPushButton:hover{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 170, 0);
+	border:1px solid green
+}</string>
+    </property>
+    <property name="text">
+     <string>Atualizar Pontuação</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_adicionar">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>230</y>
+      <width>151</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background-color: rgb(0, 0, 127);
+	color: rgb(255, 255, 255);
+	border-radius:5px;
+	border:1px solid white
+}
+QPushButton:hover{
+	background-color: rgb(255, 255, 255);
+	
+	color: rgb(0, 0, 127);
+	border:1px solid blue
+}</string>
+    </property>
+    <property name="text">
+     <string>Adicionar Jogador</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_excluir">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>230</y>
+      <width>141</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background-color: rgb(255, 0, 0);
+	
+	color: rgb(255, 255, 255);
+	border-radius:5px;
+	border:1px solid white
+}
+QPushButton:hover{
+	background-color: rgb(255, 255, 255);
+	
+	color: rgb(255, 0, 0);
+	border:1px solid red
+}</string>
+    </property>
+    <property name="text">
+     <string>Excluir Jogador</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>721</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>imagens/uno.jpg</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>ranking</zorder>
+   <zorder>btn_atualizar</zorder>
+   <zorder>btn_adicionar</zorder>
+   <zorder>btn_excluir</zorder>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
